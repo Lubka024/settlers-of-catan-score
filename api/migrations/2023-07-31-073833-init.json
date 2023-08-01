@@ -1,0 +1,149 @@
+{
+	"formatVersion": 4,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Player",
+				"unique": [],
+				"indexes": [],
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "player",
+				"eventLog": {
+					"enabled": true
+				},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"type": "Uuid",
+						"columnType": "uuid",
+						"nullable": false
+					}
+				}
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "GameSession",
+				"unique": [],
+				"indexes": [],
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "game_session",
+				"eventLog": {
+					"enabled": true
+				},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"type": "Uuid",
+						"columnType": "uuid",
+						"nullable": false
+					}
+				}
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "PlayerScore",
+				"unique": [],
+				"indexes": [],
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "player_score",
+				"eventLog": {
+					"enabled": true
+				},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"type": "Uuid",
+						"columnType": "uuid",
+						"nullable": false
+					}
+				}
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Player",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"type": "String",
+				"nullable": true,
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "GameSession",
+			"field": {
+				"name": "date",
+				"columnName": "date",
+				"type": "DateTime",
+				"nullable": true,
+				"columnType": "timestamptz"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "PlayerScore",
+			"field": {
+				"name": "score",
+				"columnName": "score",
+				"type": "Integer",
+				"nullable": true,
+				"columnType": "integer"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "PlayerScore",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "player",
+				"target": "Player",
+				"inversedBy": "scores",
+				"joiningColumn": {
+					"columnName": "player_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "scores",
+				"target": "PlayerScore",
+				"ownedBy": "player"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "PlayerScore",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "gameSession",
+				"target": "GameSession",
+				"inversedBy": "players",
+				"joiningColumn": {
+					"columnName": "game_session_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "players",
+				"target": "PlayerScore",
+				"ownedBy": "gameSession"
+			}
+		}
+	]
+}
